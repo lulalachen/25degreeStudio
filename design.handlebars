@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>{{#if_all project.title config.is_direct_link}}{{ project.title }} - {{ site.website_title }}{{else}}{{ site.website_title }}{{/if_all}}</title>
+
+		<meta name="ROBOTS" content="INDEX,FOLLOW">
+		<meta name="description" content="{{#if project.excerpt}}{{ project.excerpt }}{{else}}{{ site.meta_description }}{{/if}}">
+		<meta name="keywords" content="{{ site.meta_tags }}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1.0001, maximum-scale=1.0001">
+
+		<meta property="og:url" content="{{#if config.is_direct_link}}{{ project.direct_link }}{{else}}{{site.direct_link}}{{/if}}">
+		<meta property="og:title" content="{{#if_all project.title config.is_direct_link}}{{ project.title }} - {{ site.website_title }}{{else}}{{ site.website_title }}{{/if_all}}">
+		<meta property="og:description" content="{{#if project.excerpt}}{{ project.excerpt_long }}{{else}}{{ site.meta_description }}{{/if}}">
+		<meta property="og:image" content="{{#if_equal project.type "project"}}{{ project.thumb_url_2x }}{{else}}{{ site.header_url }}{{/if_equal}}">
+
+		{{{ site.meta_head }}}
+
+		<link href="{{ site.favicon_url }}" rel="shortcut icon">
+		<link href="{{ site.rss_url }}" rel="alternate" type="application/rss+xml" title="{{ site.website_title }} feed">
+
+		{{{ cargo_package }}}
+
+		<script src="{{#asset}}jquery-ui.min.js{{/asset}}"></script>
+		<script src="{{#asset}}jquery.ui.touch-punch.min.js{{/asset}}"></script>
+
+		<script src="/_jsapps/_libs/cargo_plugins/elementResizer.js"></script>
+
+
+
+		<style type="text/css" id="thumb_location"> </style>
+		<style type="text/css" id="snap_to"> </style>
+		<style type="text/css" id="thumb_scale"> </style>
+
+		<script src="{{ site.files.[montessori_data.js] }}"></script>
+
+	</head>
+	<body data-bodyview="{{ route.body_view }}">
+		{{{ site.custom_html }}}
+
+		{{! Saving indicator for the project thumbnails' positions}}
+		<div class="loading" id="thumb_position_loader">{{>loading_animation}}</div>
+
+
+
+		{{! The global loading indicator }}
+		<div class="loading" data-loading="page">
+			{{>loading_animation}}
+		</div>
+
+
+		{{! Mobile Navigation }}
+		{{#if route.index}}
+			<div class="mobile_site_header" >
+
+				<div class="navigation_toggle">
+					<img class="menu_icon" src="{{#asset}}menu_icon.svg{{/asset}}">
+					<img class="close" src="{{#asset}}close.svg{{/asset}}">
+				</div>
+
+			</div>
+		{{/if}}
+
+		{{! Navigation }}
+		<div id="header_spacer" style="visibility: hidden; z-index: -1; position: relative;"></div>
+		<div class="site_header" id="item_site_header" data-id="site_header">
+			<div class="site_header_inner">
+
+
+
+
+				{{#if site.header_url}}
+				<div class="header_image">
+
+					{{#if_option "header_link_to_index"}}
+						{{#if_any route.search route.is_set config.is_solo}}
+							<a href="{{ site.direct_link }}">
+						{{else}}
+							<a href="{{ site.direct_link }}" rel="show_index">
+						{{/if_any}}
+					{{/if_option}}
+						<img src="{{ site.header_url }}" {{#if display_options.header_2x}} height="{{ site.header_height_2x }}" width="{{ site.header_width_2x }}" {{else}} height="{{ site.header_height }}" width="{{ site.header_width }}"{{/if}} />
+
+					{{#if_option "header_link_to_index"}}</a>{{/if_option}}
+
+				</div>
+				{{/if}}
+
+				<div class="header_text">
+					<a href="{{ site.direct_link }}" {{#if_any route.search route.is_set config.is_solo}}{{else}}rel="show_index"{{/if_any}}>
+						{{{ site.header_text }}}
+					</a>
+				</div>
+			</div>
+
+
+			{{#if route.index}}
+
+				<div class="navigation">
+
+					<div id="autopagination_wrapper">
+						<ul class="list" data-view="Navigation" data-set="Navigation">
+							{{#navigation}}
+								{{#if_all ../display_options.use_set_links set_start}}
+									<li id="menu_{{ set_id }}" class="set_link">
+										{{#if_option "sets_are_clickable"}}
+											<a id="p{{ set_id }}" class="set_name" data-id="{{ set_id }}" href="{{ set_url }}">{{ set_name }}</a>
+										{{else}}
+											<span class="set_name">{{ set_name }}</span>
+										{{/if_option}}
+								{{/if_all}}
+
+								<li id="menu_{{ id }}" class="{{ type }}_link" data-id="{{ id }}">
+									<a id="p{{ id }}" {{#if is_set }}class="set_name"{{/if}} {{#if link_url }}target="{{ link_target }}" href="{{ link_url }}"{{else}} href="{{ url }}" {{#unless is_set}}rel="history"{{/unless}}{{/if}}>
+										{{ title_no_html }}
+									</a>
+								</li>
+
+								{{#if_all ../display_options.use_set_links set_end}}
+									</li>
+								{{/if_all}}
+							{{/navigation}}
+						</ul>
+					</div>
+
+					{{#if site.filter}}
+						<div class="filter">Filter: <b>{{ site.filter }}</b> <a class="view_all" href="{{ site.direct_link }}">view all</a></div>
+					{{/if}}
+
+					{{#if_option "following_link_in_nav"}}
+					<div class="following">
+						<a href="{{ site.following_url }}">Following</a> ({{ site.following_count }})
+					</div>
+					{{/if_option}}
+
+				</div>
+
+			{{/if}}
+
+		</div>
+
+
+
+
+{{#route index "/"}}
+
+			<div id="project" class="project clear" data-view="ProjectDetail" data-set="Project">
+
+				<div class="entry" data-id="{{ project.id }}" data-resize-parent style="max-width: {{ display_options.image_width }}px;">
+
+					{{#if_option "index_link_in_project"}}
+						<div class="project_nav">
+							{{#if config.is_solo}}
+								<a href="{{ site.direct_link }}" class="show_index"><img src="{{#asset}}index.svg{{/asset}}" /></a>
+							{{else}}
+								<a href="#" rel="prev_project"><img src="{{#asset}}arrow_left.svg{{/asset}}" /></a>
+								<a href="#" rel="show_index" class="show_index"><img src="{{#asset}}index.svg{{/asset}}" /></a>
+								<a href="#" rel="next_project"><img src="{{#asset}}arrow_right.svg{{/asset}}" /></a>
+							{{/if}}
+						</div>
+					{{/if_option}}
+
+
+					<div class="project_header">
+
+						{{#if_option "title_in_project"}}
+							{{#if project.show_title}}
+								<div class="project_title">
+									{{{ project.title }}}
+								</div>
+							{{/if}}
+						{{/if_option}}
+
+					</div>
+
+					<div class="project_content" data-elementresizer>
+						{{print "project.content"}}
+					</div>
+
+					<div class="project_footer">{{#if project.date}}
+							<span class="date">
+								{{ project.date }}
+							</span>
+						{{/if}}{{#if project.tags}}
+							<span class="tags">
+								Filed under
+								{{#project.tags}}<span><a href="{{ filter_link }}">{{ tag }}</a></span>{{/project.tags}}
+							</span>
+						{{/if}}{{#if_option "view_count_in_project"}}
+							<span class="views">({{ project.views }} views)</span>
+						{{/if_option}}{{#if site.is_editor}}
+							<span class="edit_site">
+								<a href="{{ site.direct_link }}/admin/{{ project.id }}" target="_top">Edit</a>
+							</span>
+						{{/if}}</div>
+
+					<directlink link="{{ project.direct_link }}" id="dl_{{ project.id }}"></directlink>
+
+				</div>
+
+			</div>
+
+		<div class="container">
+
+
+
+		{{#unless config.is_solo }}
+			<div id="thumbnails" class="thumbnails clear" data-view="Thumbnail" data-set="Projects">
+
+				{{#projects}}
+					<div class="thumbnail_wrapper" id="wrapper_{{ id }}" data-id="{{ id }}" data-set_id="{{ set_id }}" data-width="{{ thumb_width }}" data-height="{{ thumb_height }}">
+
+						<div class="thumbnail" id="item_{{ id }}" data-id="{{ id }}" data-set_id="{{ set_id }}">
+							<div class="loading" data-loading="{{ id }}">
+								{{>loading_animation}}
+							</div>
+							<a href="{{ url }}" data-id="{{ id }}" rel="history">
+
+								<div class="thumb_image">
+									<img src="{{print "thumb_url"}}" width="{{ thumb_width }}" height="{{ thumb_height }}" {{#if thumb_url_2x}} data-hi-res="{{ thumb_url_2x }}" {{/if}}>
+								</div>
+							</a>
+
+
+							{{#if_any ../display_options.title_in_thumb ../display_options.excerpt_in_thumb ../display_options.tags_in_thumb}}
+								<div class="thumb_info">
+									{{#if_option "title_in_thumb"}}
+										<div class="thumb_title"><span>{{{ title }}}</span></div>
+									{{/if_option}}
+
+									{{#if_option "excerpt_in_thumb"}}
+										<div class="thumb_excerpt" >{{ excerpt }}</div>
+									{{/if_option}}
+
+									{{#if_option "tags_in_thumb"}}
+										<div class="thumb_tags">{{#tags}}<span class="thumb_tag"><a href="{{ filter_link }}">{{ tag }}</a></span>{{/tags}}</div>
+									{{/if_option}}
+								</div>
+							{{/if_any}}
+						</div>
+					</div>
+				{{/projects}}
+
+			</div>
+			<div id="autopaginate_loader" class="moreload" data-view="Autopaginate" data-preload_distance="500">
+				{{>loading_animation}}
+			</div>
+		{{/unless}}
+
+		<div class="site_footer">
+
+		</div>
+
+		</div>
+
+{{/route}}
+
+
+{{#route search "/search"}}
+
+		<div id="search" class="search" data-view="Search">
+			<div action="#" class="search_form_results" id="search_form_results">
+				<div class="search_header">Search results for </div>
+				<input type="text" value="{{ search.term }}" id="results_search_term">
+			</div>
+			{{#search}}
+				{{#projects}}
+				<div class="result">
+					<div class="search_thumb">
+						<a href="{{ direct_link }}">
+							<img border="0" align="left" src="{{ thumb_url }}">
+						</a>
+					</div>
+					<div class="search_text">
+						<div class="search_title">
+							<a href="{{ direct_link }}">{{{ title }}}</a>
+						</div>
+						<div class="search_body">
+							{{ excerpt }}
+						</div>
+						<div class="search_tags">
+							{{#tags}}
+								<span class="thumb_tag"><a href="{{ filter_link }}">{{ tag }}</a></span>
+							{{/tags}}
+						</div>
+					</div>
+				</div>
+				{{/projects}}
+			{{/search}}
+		</div>
+
+{{/route}}
+
+	{{! Cog panel for montessori design options}}
+	{{#if site.is_editor}}
+
+
+		<a id ="save_button" href="#">Save Thumb Positions</a>
+		<div id="design_panel" style="margin-right: 0px;">
+		    <a href="#" id="design_symbol"><img class="cog_symbol" src="{{#asset}}settings_gear.svg{{/asset}}"></a>
+		    <div id="design_options">
+		    	<a href="#" id="auto_save" class="option toggle option_first">Auto-save <span>on</span></a>
+		        <a href="#" id="snap" class="option toggle">Snap <span>on</span></a>
+		        <a href="#" id="stack" class="option toggle">Stack<span>on</span></a>
+		        <a href="#" id="limit_horiz" class="option toggle">Limit Horizontally <span>on</span></a>
+		        <a href="#" id="limit_vert" class="option toggle">Limit Vertically<span>on</span></a>
+		        <a href="#" id="randomize" class="option">Randomize</a>
+		        <a href="#" id="help" class="option  option_last">Help</a>
+		    </div>
+		    <div id="help_content" style="display: none;" data-content="
+		        The Montessori design supports thumbnails of any size that can be positioned anywhere on the page (when logged in). Opening the Admin panel is not necessary.<br><br>
+
+				Drag &amp; drop actions are saved automatically; the new layout is published instantly.<br><br>
+
+				<b>Auto-save</b> saves your website layout automatically while you change the layout.<br><br>
+
+				<b>Snap</b> uses padding to snap-to while dragging. Can be adjusted via CSS through the <i>.snap_to</i> class.<br><br>
+
+				<b>Stack</b> brings thumbnails to the front when dragged.<br><br>
+
+				<b>Limit Horizontally</b> prevents thumbnails from overflowing the left and right sides of the browser window.<br><br>
+
+				<b>Limit Vertically</b> prevents thumbnails from overflowing the top and bottom of the browser window.<br><br>
+
+				<b>Randomize</b> randomizes randomly.<br>"
+
+
+			></div>
+		</div>
+	{{/if}}
+
+	</body>
+</html>
