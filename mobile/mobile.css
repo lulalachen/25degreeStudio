@@ -1,6 +1,6 @@
-* { 
-	-moz-box-sizing: border-box; 
-	-webkit-box-sizing: border-box; 
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -260,7 +260,7 @@ br {
 	line-height: 26px;
 	padding: 0 0 0 0;
 	position: fixed;
-	top: 44px; left: 0; right: 0; 
+	top: 44px; left: 0; right: 0;
 	z-index: 9;
 	-webkit-overflow-scrolling: touch;
 }
@@ -496,14 +496,14 @@ blockquote {
 	margin: 0;
 	padding: 0;
 	position: relative;
-	
+
 	-webkit-transition-property: -webkit-transform;
 	-webkit-transition-duration: 0.2s;
 	-webkit-transition-timing-function: ease-out;
 
-	-webkit-transform: translate3d(0,0,0); 
+	-webkit-transform: translate3d(0,0,0);
 	-webkit-backface-visibility: hidden;
-	
+
 	width: 5000px;
 }
 
@@ -516,9 +516,9 @@ blockquote {
 	margin: 0px;
 	display: block;
 	float: left !important;
-	
+
 	/*apply a transfor to kick in the hardware acceleration.  Without this, the first time we add the transform you get odd rendering of the divs (half missing) */
-	-webkit-transform: translate3d(0px,0px,0px); 
+	-webkit-transform: translate3d(0px,0px,0px);
 }
 
 .slideshow_mobile .caption {
@@ -574,14 +574,14 @@ blockquote {
 }
 
 /* Orientation */
-@media (orientation: landscape) { 
+@media (orientation: landscape) {
 	.toolset,
 	.nav_container {
 		position: absolute;
 	}
 }
 
-@media (orientation: portrait) { 
+@media (orientation: portrait) {
 	.toolset,
 	.nav_container {
 		position: fixed;
@@ -646,7 +646,7 @@ blockquote {
 }
 
 .audio_component .play_pause {
-	background: url("/_gfx/playpause.png");		   
+	background: url("/_gfx/playpause.png");
 }
 
 .audio_component .spectrum .spectrum_bar {

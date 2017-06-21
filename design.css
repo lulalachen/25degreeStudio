@@ -1,6 +1,10 @@
 /**
  * Montessori 2015
  */
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+* {-webkit-font-smoothing: antialiased;}
 
 body,html {
     margin: 0;
@@ -14,6 +18,7 @@ body {
     font-family: 'Dosis','Noto Sans TC', sans-serif;
     word-spacing: 2.0px;
     font-size: 13px;
+    font-weight: 400;
     line-height: 2.0;
 }
 
@@ -43,7 +48,8 @@ body.vertical_limit .site_header {
 
 .header_image img {
     max-height: 200px;
-    width: auto;
+    max-width: 200px;
+    height: auto;
 }
 
 .header_text {
@@ -79,7 +85,7 @@ body:not(.mobile) .header_text a:hover {
     margin-top: 18px;
     position: relative;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: bold;
     line-height: 2;
     z-index: 999;
 }
@@ -337,8 +343,6 @@ body.horizontal_limit .container {
 .project_content {
     margin: 0px;
     text-align: left;
-    font-family:'Dosis','Noto Sans TC', sans-serif;
-    font-weight: thin;
 }
 
 .project_content:after {
@@ -348,14 +352,28 @@ body.horizontal_limit .container {
     display: table;
 }
 
+
 .project_content .text {
     height: auto;
     width:inherit;
     max-width: inherit;
     float: left;
-    margin-bottom: 59px;
-    font-size: 11px;
-    display: flex;
+    margin: 10px 0;
+    font-size: 13px;
+    font-weight: 100;
+}
+
+.project_content .chineseDescription {
+    font-weight: 400;
+}
+
+.chinese {
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.project_content .text:last-child {
+    margin: 0 0 59px;
 }
 
 #project.splash {
@@ -811,10 +829,77 @@ blockquote {
     left: 0;
     top: 0;
     display: inline-block;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
 }
 
 .thumbnail .thumb_image:hover {
     filter: opacity(0.5);
+
+    -webkit-animation-name: hover-thumbnail-float, hover-thumbnail;
+    animation-name: hover-thumbnail-float, hover-thumbnail;
+
+    -webkit-animation-duration: .3s, 1.5s;
+    animation-duration: .3s, 1.5s;
+
+    -webkit-animation-delay: 0s, .3s;
+    animation-delay: 0s, .3s;
+
+    -webkit-animation-timing-function: ease-out, ease-in-out;
+    animation-timing-function: ease-out, ease-in-out;
+
+    -webkit-animation-iteration-count: 1, infinite;
+    animation-iteration-count: 1, infinite;
+
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-direction: normal, alternate;
+    animation-direction: normal, alternate;
+}
+
+@-webkit-keyframes hover-thumbnail {
+  0% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+  50% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+  100% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hover-thumbnail {
+  0% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+  50% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+  100% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+}
+
+@-webkit-keyframes hover-thumbnail-float {
+  100% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes hover-thumbnail-float {
+  100% {
+    -webkit-transform: translateY(-8px);
+    transform: translateY(-8px);
+  }
 }
 
 .thumbnail .thumb_image img {
@@ -1546,7 +1631,7 @@ body.mobile .site_header {
 
 body.mobile .header_image img {
     max-height: 60px;
-    width: auto;
+    width: 120px;
 }
 
 /* prevents double-tapping in mobile devices */
