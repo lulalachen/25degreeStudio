@@ -147,8 +147,7 @@ body:not(.mobile) .header_text a:hover {
 }
 
 .page_link a {
-    color: #000
-        ;
+    color: #000;
 }
 
 .navigation ul {
@@ -400,8 +399,8 @@ body.horizontal_limit .container {
 
 .project_content img {
     display: block;
-    float: none;
-    margin: 0 0 20px;
+    /*float: none;*/
+    margin: 10px 0;
     border: 0;
 }
 
