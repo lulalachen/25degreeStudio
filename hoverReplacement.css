@@ -1,3 +1,23 @@
+/*
+  [Guide]
+
+  1. 先到 Cargo Admin Panel (http://cargocollective.com/25degreestudio/admin)
+  2. 找到想要新增換圖的專案，進入該專案的編輯模式
+  3. 拉到最下面找到PID (ex: PID: 12521621)
+  4. 把後面的那串數字複製起來，再進到這個檔案開始編輯
+  5. 編輯規則範例：
+
+  .hoverReplacement_12521621 {
+    background-image: url('換圖的網址');
+  }
+
+  .hoverReplacement_12521621:hover {
+    background-image: url('換圖的網址') !important;
+  }
+
+  * 注意每一個專案要新增兩個css，有hover的那個，最後面的 !important 不要忘記！
+*/
+
 .hoverReplacement_12521621 {
   background-image: url('//payload532.cargocollective.com/1/23/738089/12950292/prt_495x227_1498051145.png');
 }
