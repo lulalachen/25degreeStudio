@@ -15,9 +15,9 @@
 		<meta property="og:image" content="{{#if_equal project.type "project"}}{{ project.thumb_url_2x }}{{else}}{{ site.header_url }}{{/if_equal}}">
 
 		{{{ site.meta_head }}}
-
 		<link href="{{ site.favicon_url }}" rel="shortcut icon">
 		<link href="{{ site.rss_url }}" rel="alternate" type="application/rss+xml" title="{{ site.website_title }} feed">
+		<link rel="stylesheet" href="https://rawgit.com/lulalachen/25degreeStudio/master/hoverReplacement.css">
 
 		{{{ cargo_package }}}
 
@@ -214,11 +214,13 @@
 							<div class="loading" data-loading="{{ id }}">
 								{{>loading_animation}}
 							</div>
-							<a href="{{ url }}" data-id="{{ id }}" rel="history">
-
-								<div class="thumb_image">
-									<img src="{{print "thumb_url"}}" width="{{ thumb_width }}" height="{{ thumb_height }}" {{#if thumb_url_2x}} data-hi-res="{{ thumb_url_2x }}" {{/if}}>
-								</div>
+							<a
+								class="thumb_image hoverReplacement_{{ id }}"
+								style="background-image: url('{{ thumb_url }}');"
+								href="{{ url }}"
+								data-id="{{ id }}"
+								rel="history"
+							>
 							</a>
 
 

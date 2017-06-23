@@ -1,8 +1,9 @@
 /**
  * Montessori 2015
  */
-@import url('https://fonts.googleapis.com/css?family=Dosis');
+@import url(//fonts.googleapis.com/css?family=Dosis);
 @import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
 
 * {-webkit-font-smoothing: antialiased;}
 
@@ -822,7 +823,7 @@ blockquote {
 
 .thumbnail .thumb_image {
     width: 100%;
-    height: auto;
+    height: 100%;
     background-size: contain;
     background-repeat: no-repeat;
     left: 0;
